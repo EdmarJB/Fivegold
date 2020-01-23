@@ -1,0 +1,185 @@
+﻿@model FiveGold.Models.Mapeamento.DespesaCartao
+
+<style>
+    .botao {
+        /*font-weight: bold;*/
+        padding: 10px;
+        float: left;
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+        border-bottom-style: solid;
+        border-top-color: darkorange;
+        border-right-color: darkorange;
+        border-bottom-color: darkorange;
+        border-left-color: darkorange;
+        color: white;
+        background-color: darkorange;
+        /*margin-left: 20px;*/
+    }
+
+        .botao:hover {
+            background-color: rgb(238,118,0);
+            /*CSS 3*/
+            /*border-radius: 10px 0px 10px 0px;*/
+            color: white;
+        }
+</style>
+
+<script src="~/Content/Mascara-de-valores/jquery.mask.js"></script>
+<script type="text/javascript">
+    function ForaDaData(data) {
+        $("#msg").html('<div class="alert alert-danger" role="alert">Não é permitido criar despesas com data anterior à ' + data + '</div>');
+    }
+
+    function VerificaLimite() {
+        $('#Valor').val(String($("#Valor").val()).replace(".", ""));
+
+        if ($("#Valor").val() === "" || $("#Data").val() === "" || $("#VencimentoFatura").val() === "" || $("#QtdParcela").val() === "" || $("#IDCatDespesa").val() === "0" || $("#IDCartao").val() === "0") {
+            $("#msg").html('<div class="alert alert-warning" role="alert">Preencha todos os campos!</div>');
+        } else {
+            document.getElementById('btn').value = "Aguarde...";
+            var IDCartao = $("#IDCartao").val();
+            var ValorDespesa = $("#Valor").val();
+
+            $.ajax({
+                //url: '/DespesaCartao/VerificaLimite',
+                url: '@Url.Action("VerificaLimite", "DespesaCartao")',
+                type: 'Post',
+                dataType: 'json',
+                data: { IDCartao: IDCartao, ValorDespesa: ValorDespesa },
+                success: function (data) {
+                    if (data == 'ok') {
+                        document.getElementById('btn').value = "Salvar";
+                        $("#msg").html('<div class="alert alert-warning" role="alert">O valor exede o limite deste cartão!</div>');
+
+                    } else if (data == 'false') {
+                        document.getElementById('btn').value = "Aguarde...";
+                        var IDCartao = $("#IDCartao").val();
+                        var Valor = $("#Valor").val();
+                        var DataCompra = $("#DataCompra").val();
+                        var QtdParcela = $("#QtdParcela").val();
+                        var IDCatDespesa = $("#IDCatDespesa").val();
+                        var Descricao = $("#Descricao").val();
+
+                        $.ajax({
+                            url: '@Url.Action("Create", "DespesaCartao")',
+                            type: 'Post',
+                            dataType: 'json',
+                            data: { IDCartao: IDCartao, Valor: Valor, DataCompra: DataCompra, QtdParcela: QtdParcela, IDCatDespesa: IDCatDespesa, Descricao: Descricao },
+                            success: function (resposta) {
+                                if (resposta == 'cadastrou') {
+                                    window.location.href = "/Dashboard/DespCartao/" + IDCartao;
+                                } else if (resposta[0] == 'foradadata') {
+                                    //window.location.href = "/Dashboard/DespCartao/" + IDCartao;
+                                    ForaDaData(resposta[1]);
+                                } else if ("naoCadastrou") {
+                                    window.location.href = "/Dashboard/DespCartao/" + IDCartao;
+                                    alert("Esta despesa nao pode ser salva!");
+                                }
+                            }, error: function (resposta) {
+                                window.location.href = "/Dashboard/DespCartao";
+                                alert("Tivemos um problema ao salvar a despesa!");
+                            }
+                        });
+                    }
+
+                }, error: function (data) {
+                    $("#msg").html('<div class="alert alert-warning" role="alert">Tivemos um problema para salvar sua despesa, Tente mais tarde. <br />Obrigado!</div>');
+                }
+            });
+        }
+    }
+
+    $(document).ready(function () {
+        $('#Valor').mask('###.##0,00', { reverse: true });
+        $("#preloader").hide();
+    });
+
+    function VerificaVal() {
+        if ($("#QtdParcela").val() < 1) {
+            $("#QtdParcela").val(1);
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="modal-header" style="background-color:darkorange">
+            <h3 class="modal-title" style="color:white;">Nova Despesa Cartao &nbsp;<i class="fas fa-credit-card"></i></h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <span id="msg"></span>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row col-md-12" style="background-color:rgba(255,220,50,0.1); margin-left:0px; padding-top:10px">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @*@Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <input type="text" id="Valor" name="Valor" placeholder="0,00" class="form-control col-md-12" />
+                        @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DataCompra, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DataCompra, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                        @Html.ValidationMessageFor(model => model.DataCompra, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QtdParcela, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.QtdParcela, new { htmlAttributes = new { @class = "form-control col-md-12", @onblur = "VerificaVal()" } })
+                        @Html.ValidationMessageFor(model => model.QtdParcela, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IDCatDespesa, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IDCatDespesa", null, htmlAttributes: new { @class = "form-control col-md-12" })
+                        @Html.ValidationMessageFor(model => model.IDCatDespesa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IDCartao, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IDCartao", null, htmlAttributes: new { @class = "form-control col-md-12" })
+                        @Html.ValidationMessageFor(model => model.IDCartao, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control col-md-12", Placeholder = "O que você comprou?" } })
+                        @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" id="btn" value="Salvar" class="btn botao col-md-12" onclick="VerificaLimite()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

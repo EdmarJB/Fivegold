@@ -1,0 +1,49 @@
+﻿@model FiveGold.Models.Mapeamento.Conta
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#preloader").hide();
+    })
+</script>
+
+<h2>Details</h2>
+
+<div>
+    <h4>Conta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CatConta.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatConta.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Saldo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Saldo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDConta }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

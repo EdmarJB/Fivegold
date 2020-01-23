@@ -1,0 +1,94 @@
+﻿@model FiveGold.Models.Mapeamento.Transferencia
+
+<script type="text/javascript">
+    $("form").on("submit", function (e) {
+
+        $('#Valor').val(String($("#Valor").val()).replace(".", ""));
+
+        if ($("#Valor").val() === "" || $("#DataTransferencia").val() === "" || $("#IDOrigem").val() === "0" || $("#IDDestino").val() === "0") {
+            e.preventDefault();
+            //alert(dd);
+            $("#msg-preenche").html('<div class="alert alert-warning" role="alert">Preencha todos os campos!</div>');
+        }
+        document.getElementById('btn').value = "Aguarde...";
+    });
+
+</script>
+
+<script src="~/Content/Mascara-de-valores/jquery.mask.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#Valor').mask('###.##0,00', { reverse: true });
+        $("#preloader").hide();
+    })
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="modal-header" style="background-color:rgb(66,170,196);">
+            <h3 class="modal-title" style="color:white">Nova Transferência &nbsp;<i class="fas fa-random"></i></h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+            @if (ViewBag.SaldoInsuficiente != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <span>Saldo Insufuciente!</span>
+                </div>
+            }
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row col-sm-12" style="background-color:rgba(66,170,196,0.1); margin-left:0px; padding-top:10px">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IDOrigem, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IDContaOrigem", null, htmlAttributes: new { @class = "form-control col-md-12" })
+                        @Html.ValidationMessageFor(model => model.IDOrigem, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @*@Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control col-md-12" } })*@
+                        <input type="text" id="Valor" name="Valor" placeholder="0,00" data-mask="#.###.##0,00" class="form-control col-md-12" />
+                        @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IDDestino, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IDContaDestino", null, htmlAttributes: new { @class = "form-control col-md-12" })
+                        @Html.ValidationMessageFor(model => model.IDDestino, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DataTransferencia, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DataTransferencia, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                        @Html.ValidationMessageFor(model => model.DataTransferencia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Salvar" class="btn btn-info col-md-12" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}

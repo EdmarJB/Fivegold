@@ -1,0 +1,25 @@
+﻿@model FiveGold.Models.Mapeamento.CatDespesa
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <input type="button" value="Voltar" class="btn btn-primary" onClick="history.go(-1)">
+</p>

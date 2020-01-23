@@ -1,0 +1,20 @@
+﻿@model FiveGold.Models.Mapeamento.ComentarioConhecimento
+
+<body onload="fazer()">
+    <div>
+        <div class="title-box medium">
+            <h2>Faça seu comentário</h2>
+        </div>
+        @using (Html.BeginForm("Create", "ComentarioConhecimento", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div style="display:none">
+                <input type="text" name="IDConhecimento" id="IDConhecimento" />
+            </div>
+            <textarea id="TextoComentario" name="TextoComentario" rows="5" cols="50"></textarea>
+            <div>
+                <input type="submit" value="Comentar" class="_1-submit-button w-button" />
+            </div>
+        }
+    </div>
+</body>

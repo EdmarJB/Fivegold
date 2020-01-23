@@ -1,0 +1,106 @@
+﻿<!-- HEADER MOBILE-->
+<header class="header-mobile d-block d-lg-none" style="background-color:black">
+    <div class="header-mobile__bar">
+        <div class="container-fluid">
+            <div class="header-mobile-inner">
+                <a class="logo" href="index.html">
+                    <img src="~/Content/Imagens/Icones/FiveGold.png" width="100px" alt="FiveGold" />
+                </a>
+                <span style="color:darkorange;font-family:Oswald, sans-serif;letter-spacing: 2px;text-transform: uppercase;">BEM VINDO @FiveGold.Models.Mapeamento.Usuario.Get.Nome!</span>
+                <button class="hamburger hamburger--slider" type="button" style="background-color:darkorange">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar-mobile">
+        <div class="container-fluid">
+            <ul class="navbar-mobile__list list-unstyled" style="background-color:black">
+                <li>
+                    <a style="font-size:20px; color: white" href="/Dashboard/Index"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Contas"><i class="zmdi zmdi-money" style="font-size:2rem; color:rgb(48,60,200)"></i>Contas</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Receitas"><i class="fas fa-sort-amount-up" style="font-size:1.2rem; color:green"></i>Receitas</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Despesas"><i class="fas fa-sort-amount-down" style="font-size:1.2rem; color:rgb(205,51,51)"></i>Despesas</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Cartao"><i class="fas fa-credit-card" style="font-size:1rem; color:darkorange"></i>Cartões</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Transferencias"><i class="fas fa-exchange-alt" style="font-size:1.2rem; color:rgb(66,170,196)"></i>Transferências</a>
+                </li>
+
+                @*------------------------------------*@
+                <li style="background-color:gray">
+                    <a href="#">@*<i class="fas fa-exchange-alt" style="font-size:1.2rem"></i>*@</a>
+                </li>
+                <li>
+                    <a style="color: white" href="/"><i class="fas fa-home" style="font-size:1.2rem"></i>Início</a>
+                </li>
+                <li>
+                    <a style="color: white" href="/Conhecimento/Index"><i class="fas fa-brain" style="font-size:1.2rem"></i>Conhecimento</a>
+                </li>
+                <li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <a style="color: white; margin-left:15px;" href="javascript:document.getElementById('logoutForm').submit()"><i class="fas fa-sign-out-alt" style="font-size:1.2rem"></i>Sair</a>
+                        }
+                    }
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- END HEADER MOBILE-->
+<!-- MENU SIDEBAR-->
+<aside class="menu-sidebar d-none d-lg-block" style="background-color: rgb(45,48,49)">
+    <div class="logo" style="background-color:black; height:60px; border: solid 10px black">
+        <a href="#">
+            <img src="~/Content/Imagens/Icones/FiveGold.png" width="100px" alt="FiveGold" style="margin-top:50px" />
+        </a>
+    </div>
+
+    <div class="menu-sidebar__content js-scrollbar1">
+        <br />
+        <nav class="navbar-sidebar">
+            <ul class=" navbar__list">
+                
+                <li>
+                    <a style="font-size:20px; color:white" href="/Dashboard/Index"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Contas"><i class="zmdi zmdi-money" style="font-size:2rem; color:rgb(48,60,200)"></i>Contas</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Receitas"><i class="fas fa-sort-amount-up" style="font-size:1.2rem; color:green"></i>Receitas</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Despesas"><i class="fas fa-sort-amount-down" style="font-size:1.2rem; color:rgb(205,51,51)"></i>Despesas</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Cartao"><i class="fas fa-credit-card" style="font-size:1rem; color:darkorange"></i>Cartões</a>
+                </li>
+                <li>
+                    <a style="color:white" href="/Dashboard/Transferencias"><i class="fas fa-exchange-alt" style="font-size:1.2rem; color:rgb(66,170,196)"></i>Transferências</a>
+                </li>
+
+            </ul>
+        </nav>
+            <div class="col-md-12" style="margin-top:100px">
+                <div class="copyright">
+                    <p style="color:white;">Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                </div>
+            </div>
+    </div>
+</aside>
+<!-- END MENU SIDEBAR-->

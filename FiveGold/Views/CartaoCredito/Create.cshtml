@@ -1,0 +1,128 @@
+﻿@model FiveGold.Models.Mapeamento.CartaoCredito
+
+<style>
+    .botao {
+        /*font-weight: bold;*/
+        padding: 10px;
+        float: left;
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+        border-bottom-style: solid;
+        border-top-color: darkorange;
+        border-right-color: darkorange;
+        border-bottom-color: darkorange;
+        border-left-color: darkorange;
+        color: white;
+        background-color: darkorange;
+        /*margin-left: 20px;*/
+    }
+
+        .botao:hover {
+            background-color: rgb(238,118,0);
+            color: white;
+        }
+</style>
+
+<script src="~/Content/Mascara-de-valores/jquery.mask.js"></script>
+<script type="text/javascript">
+    $("form").on("submit", function (e) {
+
+        $('#Limite').val(String($("#Limite").val()).replace(".", ""));
+
+        if ($("#Nome").val() === "" || $("#IDBandeira").val() === "0" || $("#Limite").val() === "" || $("#DiaFechamento").val() === "" || $("#DiaPagamento").val() === "") {
+            e.preventDefault();
+            $("#msg-preenche").html('<div class="alert alert-warning" role="alert">Preencha todos os campos!</div>');
+        }
+    });
+
+    $(document).ready(function () {
+        $('#Limite').mask('###.##0,00', { reverse: true });
+        $("#preloader").hide();
+    })
+
+    function VerificaVal() {
+        if ($("#DiaFechamento").val() < 1) {
+            $("#DiaFechamento").val(1);
+        }
+    }
+
+    function VerificaVall() {
+        if ($("#DiaPagamento").val() < 1) {
+            $("#DiaPagamento").val(1);
+        }
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="modal-header" style="background-color:darkorange">
+            <h3 class="modal-title" style="color:white;">Novo Cartão &nbsp;<i class="fas fa-credit-card"></i></h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <span id="msg-preenche"></span>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row col-sm-12" style="background-color:rgba(255,220,50,0.1); margin-left:0px; padding-top:10px">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IDBandeira, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IDBandeira", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IDBandeira, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Limite, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Limite, new { htmlAttributes = new { @class = "form-control", placeholder = "0,00" } })
+                        @Html.ValidationMessageFor(model => model.Limite, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DiaFechamento, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DiaFechamento, new { htmlAttributes = new { @class = "form-control", @onblur = "VerificaVal()" } })
+                        @Html.ValidationMessageFor(model => model.DiaFechamento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DiaPagamento, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DiaPagamento, new { htmlAttributes = new { @class = "form-control", @onblur = "VerificaVall()" } })
+                        @Html.ValidationMessageFor(model => model.DiaPagamento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Salvar" class="btn botao col-md-12" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

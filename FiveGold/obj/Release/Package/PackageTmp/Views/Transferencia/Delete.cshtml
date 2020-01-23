@@ -1,0 +1,82 @@
+﻿@model FiveGold.Models.Mapeamento.Transferencia
+
+<div class="modal-header" style="background-color:rgb(66,170,196);">
+    <h3 class="modal-title" style="color:white;">Excluir Transferência &nbsp;<i class="fas fa-exchange-alt"></i></h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div style="background-color:rgba(66,170,196,0.1);">
+    <div style="margin-left:0px; padding:20px">
+        <dl class="dl-horizontal">
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserId)
+                </dd>*@
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IDOrigem)
+            </dt>
+
+            <dd>
+                @*@Html.DisplayFor(model => model.IDOrigem)*@
+                @foreach (var conta in ViewBag.IDConta)
+                {
+                    if (conta.IDConta == Model.IDOrigem)
+                    {
+                        @conta.Nome
+                    }
+                }
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IDDestino)
+            </dt>
+
+            <dd>
+                @*@Html.DisplayFor(model => model.IDDestino)*@
+                @foreach (var conta in ViewBag.IDConta)
+                {
+                    if (conta.IDConta == Model.IDDestino)
+                    {
+                        @conta.Nome
+                    }
+                }
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Valor)
+            </dt>
+
+            <dd>
+                @*@Html.DisplayFor(model => model.Valor)*@
+                R$ @Model.Valor.ToString("###,###,##0.00")
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DataTransferencia)
+            </dt>
+
+            <dd>
+                @*@Html.DisplayFor(model => model.DataTransferencia)*@
+                @Model.DataTransferencia.ToString("dd/MM/yyyy")
+            </dd>
+
+        </dl>
+
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="Excluir" class="btn btn-info col-md-12" style="margin-bottom:10px" />
+            </div>
+        </div>
+    }
+</div>

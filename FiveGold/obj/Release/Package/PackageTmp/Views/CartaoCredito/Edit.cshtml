@@ -1,0 +1,108 @@
+﻿@model FiveGold.Models.Mapeamento.CartaoCredito
+
+<style>
+    .botao {
+        /*font-weight: bold;*/
+        padding: 10px;
+        float: left;
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+        border-bottom-style: solid;
+        border-top-color: darkorange;
+        border-right-color: darkorange;
+        border-bottom-color: darkorange;
+        border-left-color: darkorange;
+        color: white;
+        background-color: darkorange;
+        /*margin-left: 20px;*/
+    }
+
+        .botao:hover {
+            background-color: rgb(238,118,0);
+            color: white;
+        }
+</style>
+
+<script src="~/Content/Mascara-de-valores/jquery.mask.js"></script>
+<script type="text/javascript">
+    $("form").on("submit", function (e) {
+        $('#Limite').val(String($("#Limite").val()).replace(".", ""));
+    });
+
+    $(document).ready(function () {
+        $('#Limite').mask('###.##0,00', { reverse: true });
+        $("#preloader").hide();
+    })
+</script>
+
+<div class="modal-header" style="background-color:darkorange">
+    <h3 class="modal-title" style="color:white;">Editar Cartão &nbsp;<i class="fas fa-credit-card"></i></h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row col-sm-12" style="background-color:rgba(255,220,50,0.1); margin-left:0px; padding-top:10px">
+        <div class="col-md-6">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.IDCartao)
+            @Html.HiddenFor(model => model.UserId)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDBandeira, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IDBandeira", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IDBandeira, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Limite, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Limite, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Limite, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DiaFechamento, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DiaFechamento, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DiaFechamento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DiaPagamento, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DiaPagamento, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DiaPagamento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Salvar" class="btn botao col-md-12" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

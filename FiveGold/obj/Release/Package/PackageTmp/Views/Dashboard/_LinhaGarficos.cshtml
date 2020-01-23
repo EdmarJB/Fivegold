@@ -1,0 +1,261 @@
+﻿
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("ReceitaMensal", "Dashboard")',success: function (resultReceita) {
+                    google.charts.load('current', {'packages': ['corechart']});
+                    google.charts.setOnLoadCallback(function () {
+                        drawChartReceita(resultReceita);
+                    });
+                }
+            });
+        });
+
+        function drawChartReceita(resultReceita) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Name');
+            data.addColumn('number', 'Receita');
+            var dataArray = [];
+
+            $.each(resultReceita, function (i, obj) {
+                dataArray.push([obj.Nome, obj.Valor]);
+            });
+            data.addRows(dataArray);
+
+            var pieChartOptions = {
+                titleTextStyle: {
+                    color: 'Black',
+                    fontSize: 20,
+                },
+                title: "Receitas de @ViewBag.mesatual" ,
+                pieHole: 0.5,
+                width: 410,
+                height: 400,
+                bar: { groupWidth: "20%" },
+                legend: 'none',
+                pieSliceText: 'value',
+            };
+
+            var pieChart = new google.visualization.PieChart(document
+                .getElementById('piechart_Receitas'));
+
+            pieChart.draw(data, pieChartOptions);
+        }
+</script>
+
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("DespesaMensal", "Dashboard")',success: function (resultDespesas) {
+                    google.charts.load('current', {'packages': ['corechart']});
+                    google.charts.setOnLoadCallback(function () {
+                        drawChartDespesa(resultDespesas);
+                    });
+                }
+            });
+        });
+
+        function drawChartDespesa(resultDespesas) {
+            var dataa = new google.visualization.DataTable();
+            dataa.addColumn('string', 'Name');
+            dataa.addColumn('number', 'Despesa');
+            var dataArrayy = [];
+
+            $.each(resultDespesas, function (i, obj) {
+                dataArrayy.push([obj.Nome, obj.Valor]);
+            });
+            dataa.addRows(dataArrayy);
+
+            var pieChartOptionss = {
+                titleTextStyle: {
+                    color: 'Black',
+                    fontSize: 20
+                },
+                title: "Despesas de @ViewBag.mesatual",
+                pieHole: 0.5,
+                width: 430,
+                height: 400,
+                bar: { groupWidth: "20%" },
+                legend: 'none',
+                pieSliceText: 'value', /*'label'  'porcentagem'*/
+                //chartArea: { left: 0, top: 0, width: '80%', height: '100%' }
+            };
+
+            var pieChartt = new google.visualization.PieChart(document
+                .getElementById('piechart_Despesas'));
+
+            pieChartt.draw(dataa, pieChartOptionss);
+        }
+</script>
+
+@* Columm Chart *@
+
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("GraficoReDe", "Dashboard")',success: function (ResultReDe) {
+                    google.charts.load('current', {'packages': ['corechart']});
+                    google.charts.setOnLoadCallback(function () {
+                        drawChartReDe(ResultReDe);
+                    });
+                }
+            });
+        });
+
+    function drawChartReDe(ResultReDe) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('number', 'Receita');
+        data.addColumn('number', 'Despesa');
+        var dataArray = [];
+
+        $.each(ResultReDe, function (i, obj) {
+            dataArray.push([("00" + obj.Mes).slice(-2) + '/' + obj.Ano, obj.ValorReceita, obj.ValorDespesa]);
+        });
+        data.addRows(dataArray);
+
+        var columnChartOptions = {
+            titleTextStyle: {
+                color: 'Black',
+                fontSize: 20
+            },
+            title: "",
+            //width: 400,
+            height: 300,
+            bar: { groupWidth: "60%" },
+            colors: ['#097138', '#a52714'],
+            hAxis: {
+                title: 'Meses'
+            },
+            vAxis: {
+                title: 'Valor R$'
+            },
+        };
+
+        var columnChart = new google.visualization.ColumnChart(document
+            .getElementById('columnchart_ReDe'));
+
+        columnChart.draw(data, columnChartOptions);
+    }
+</script>
+
+@*Balanço Ultimos 6 mêses*@
+
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("GraficoReDe", "Dashboard")',success: function (Result_balanco_ReDe) {
+                    google.charts.load('current', { packages: ['corechart'] });
+                    google.charts.setOnLoadCallback(function () {
+                        drawChartBalancoReDe(Result_balanco_ReDe);
+                    });
+                }
+            });
+        });
+
+    function drawChartBalancoReDe(Result_balanco_ReDe) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Mes');
+        data.addColumn('number', 'Receita');
+        data.addColumn('number', 'Despesa');
+        var dataArray = [];
+
+        $.each(Result_balanco_ReDe, function (i, obj) {
+            dataArray.push([("00" + obj.Mes).slice(-2) + '/' + obj.Ano, obj.ValorReceita, obj.ValorDespesa]);
+        });
+        data.addRows(dataArray);
+
+        var columnChartOptions = {
+            titleTextStyle: {
+                color: 'Black',
+                fontSize: 20
+            },
+            title: "",
+            //width: 400,
+            height: 300,
+            bar: { groupWidth: "60%" },
+            colors: ['#097138', '#a52714'],
+            hAxis: {
+                title: 'Meses'
+            },
+            vAxis: {
+                title: 'Valor R$'
+            },
+            curveType: 'function',
+        };
+
+        //var columnChart = new google.visualization.ColumnChart(document.getElementById('columnchart_ReDe'));
+        //columnChart.draw(data, columnChartOptions);
+
+        var chart = new google.visualization.AreaChart(document.getElementById('columnchart_Balanco_ReDe'));
+        chart.draw(data, columnChartOptions);
+    }
+
+</script>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="au-card recent-report">
+            <div class="au-card-inner">
+                @if (ViewBag.msgReceita != null)
+                {
+                    <img src="~/Content/Imagens/Icones/SemReceita.jpg" />
+                }
+                else
+                {
+                    <div id="piechart_Receitas"></div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="au-card recent-report">
+            <div class="au-card-inner">
+                @if (ViewBag.msgDespesa != null)
+                {
+                    <img src="~/Content/Imagens/Icones/SemDespesas.jpg" />
+                }
+                else
+                {
+                    <div id="piechart_Despesas"></div>
+                }
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="col-lg-12 col-sm-12">
+        <div class="au-card recent-report">
+            <span style="color:black; font-size:15px;">Relatório Últimos 6 Mêses</span>
+            <div id="columnchart_ReDe"></div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-sm-12">
+        <div class="au-card recent-report">
+            <span style="color:black; font-size:15px;">
+                Balanço (Receitas x Despesas) nos últimos 6 meses
+            </span>
+            <div id="columnchart_Balanco_ReDe"></div>
+        </div>
+    </div>
+</div>
+<br />

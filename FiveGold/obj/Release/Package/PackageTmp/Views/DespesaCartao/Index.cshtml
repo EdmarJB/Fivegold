@@ -1,0 +1,99 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.DespesaCartao>
+
+@*@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+}*@
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CartaoCredito.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CatDespesa.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCompra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CartaoCredito.DiaPagamento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtdParcela)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPrimeiraParcela)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataUltimaParcela)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValorParcela)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDCatDespesa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDCartao)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CartaoCredito.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CatDespesa.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Valor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataCompra)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CartaoCredito.DiaPagamento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtdParcela)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.DataPrimeiraParcela)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.DataUltimaParcela)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.ValorParcela)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.IDCatDespesa)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.IDCartao)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.IDDespCartao }) |
+            @Html.ActionLink("Details", "Details", new { id = item.IDDespCartao }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.IDDespCartao })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,191 @@
+﻿<div class="modal fade" id="ModalPequena" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="conteudoModalPequena"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+    //Create
+    function PagarFatura(IDCartao, ValorFaturaa, DataInicial) {
+        //parseFloat(num).toFixed(2);
+        $("#preloader").show();
+        ValorFatura = ValorFaturaa.replace(",", ".");
+        $("#conteudoModalPequena").load("/PagarFatura/Create?IDCartao=" + IDCartao + "&ValorFatura=" + ValorFatura + "&DataInicial=" + DataInicial, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    function NovaConta() {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Conta/Create", function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    //Editar
+    function SaldoEditar(SaldoEditar) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Conta/Edit/" + SaldoEditar, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    //Detalhes
+    function SaldoDetalhes(SaldoDetalhes) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Conta/Details/" + SaldoDetalhes, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    function ReceitaDetalhes(ReceitaDetalhes) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Receita/Details/" + ReceitaDetalhes, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    function DespesaDetalhes(DespesaDetalhes) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Despesa/Details/" + DespesaDetalhes, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    function CartaoDetalhes(CartaoDetalhes) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/CartaoCredito/Details/" + CartaoDetalhes, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+        
+    function DespCartaoDetalhes(DespCartaoDetalhes) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/DespesaCartao/Details/" + DespCartaoDetalhes, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    //APAGAR
+    function SaldoApagar(SaldoApagar) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Conta/Delete/" + SaldoApagar, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    function ReceitaApagar(ReceitaApagar) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Receita/Delete/" + ReceitaApagar, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    function DespesaApagar(DespesaApagar) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Despesa/Delete/" + DespesaApagar, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    function CartaoApagar(IDCartao) {
+        $("#preloader").show();
+        $.ajax({
+            //url: '/DespesaCartao/VerificaLimite',
+            url: '@Url.Action("VerificaDespesas", "Dashboard")',
+            type: 'Post',
+            dataType: 'json',
+            data: { IDCartao: IDCartao },
+            success: function (data) {
+                if (data === "ok") {
+                    $("#preloader").hide();
+                    swal({
+                        title: "Atenção, este cartão possui despesas!",
+                        text: "As despesas serão excluidas!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    url: '@Url.Action("ApagarDespesas", "Dashboard")',
+                                    type: 'Post',
+                                    dataType: 'json',
+                                    data: { IDCartao: IDCartao },
+                                    success: function (data) {
+                                        if (data === "ok") {
+                                            $("#preloader").show();
+                                            $("#conteudoModalPequena").load("/CartaoCredito/Delete/" + IDCartao, function () {
+                                                $('#ModalPequena').modal("show");
+                                                $("#preloader").hide();
+                                            });
+                                        }
+                                    }, error: function (data) {
+                                        alert("Entrou no error do apagar despesa!");
+                                    }
+                                });
+                            } else {
+                                swal({
+                                    //title: "Atenção",
+                                    text: "Cancelado com sucesso!",
+                                    icon: "warning",
+                                })
+                            }
+                        });
+
+                } else {
+                    $("#conteudoModalPequena").load("/CartaoCredito/Delete/" + IDCartao, function () {
+                        $('#ModalPequena').modal("show");
+                    });
+                }
+
+            }, error: function (data) {
+                alert("Entrou no error!");
+            }
+        });
+
+    }
+
+    function TransferenciaApagar(TransferenciaApagar) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/Transferencia/Delete/" + TransferenciaApagar, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+
+    function ApagarTransferencia(TransferenciaApaga) {
+        $("#preloader").show();
+        swal({
+            title: "Atenção",
+            text: "Será Apagado apenas o registro!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    TransferenciaApagar(TransferenciaApaga);
+                    
+                } else {
+                    swal({
+                        //title: "Atenção",
+                        text: "Cancelado com sucesso!",
+                        icon: "warning",
+                    })
+                    $("#preloader").hide();
+                }
+            });
+    }
+
+    function DespCartaoApagar(DespCartaoApagar) {
+        $("#preloader").show();
+        $("#conteudoModalPequena").load("/DespesaCartao/Delete/" + DespCartaoApagar, function () {
+            $('#ModalPequena').modal("show");
+        });
+    }
+</script>

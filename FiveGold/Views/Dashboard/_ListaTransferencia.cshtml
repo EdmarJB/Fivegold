@@ -1,0 +1,96 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.Transferencia>
+
+<div id="ListarTransferencias">
+    @using (Ajax.BeginForm("Transferencias", "Dashboard", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ListarTransferencias" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-12">
+                Data Inicial: <input type="date" id="DataInicio" name="DataInicio" value="@ViewBag.DataInicial" class="col-lg-3" style="color:gray; padding:10px; border-radius:8px; margin-bottom:10px">&ensp;&ensp;
+                Data Final: <input type="date" id="DataFim" name="DataFim" value="@ViewBag.DataFinal" class="col-lg-3" style="color:gray; padding:10px; border-radius:8px; margin-bottom:10px" />&ensp;&ensp;
+                <input type="submit" value="Consultar" class="btn btn-primary col-lg-3" style="padding:10px; border-radius:8px" />
+            </div>
+        </div>
+    }
+    @using (Ajax.BeginForm("Transferencias", "Dashboard", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ListarTransferencias" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row" style="margin-bottom:5px">
+            <div class="col-md-12">
+                <div style="display:none">
+                    <input type="text" id="direcao" name="direcao" />
+                    <input type="date" id="DataInicio" name="DataInicio" value="@ViewBag.DataInicial">
+                </div>
+                <div style="background-color:rgb(51,51,51); color:white; width:100%; border-radius:10px; padding:5px 40px">
+                    <div class="overview-wrap">
+                        <button onclick="carregar(1)" style="color:white"><i class="fas fa-chevron-left" style="font-size:2rem"></i></button>
+                        <div>@ViewBag.mes</div>
+                        <button onclick="carregar(2)" style="color:white"><i class="fas fa-chevron-right" style="font-size:2rem"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="table-responsive table--no-card m-b-40">
+        <table class="table table-borderless table-striped table-earning">
+            <thead>
+                <tr>
+                    <th>
+                        Origem
+                    </th>
+                    <th>
+                        Destino
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Valor)
+                    </th>
+                    <th>
+                        Data da Transferência
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        @foreach (var conta in ViewBag.ListaNomeContas)
+                        {
+                            if (item.IDOrigem == conta.IDConta)
+                            {
+                                <td>@conta.Nome</td>
+                            }
+
+                        }
+
+                        @foreach (var conta in ViewBag.ListaNomeContas)
+                        {
+                            if (item.IDDestino == conta.IDConta)
+                            {
+                                <td>@conta.Nome</td>
+                            }
+
+                        }
+                        <td>
+                            R$ @item.Valor.ToString("#,##0.00")
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.DataTransferencia).ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+
+                            <button onclick="ApagarTransferencia(@item.IdTransferencia)"><i class="fas fa-trash" style="color:gray"></i></button>
+
+                            @*@Html.ActionLink("Editar", "Edit", new { id = item.IdTransferencia }) |
+                                @Html.ActionLink("Detalhes", "Details", new { id = item.IdTransferencia }) |
+                                @Html.ActionLink("Apagar", "Delete", new { id = item.IdTransferencia })*@
+                        </td>
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+    </div>
+</div>

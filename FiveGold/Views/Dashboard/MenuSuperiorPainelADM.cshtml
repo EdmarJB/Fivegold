@@ -1,0 +1,90 @@
+﻿<style>
+    @@media (min-width: 50px) and (max-width: 991px) {
+        .jj {
+            display: none;
+        }
+
+        .TituloMobile {
+            text-align: center;
+        }
+    }
+
+    @@media (min-width: 992px) and (max-width: 1027px) {
+        .tt {
+            font-size: 13px;
+        }
+    }
+
+    .Fonte {
+        color: white;
+        margin-left: 10px;
+        margin-right: 10px;
+        font-family: Roboto, sans-serif;
+        font-size: 14px
+    }
+
+    .NomeUser {
+        padding-right: 26px;
+        padding-left: 26px;
+        background-color: #ff5136;
+        -webkit-transition: background-color 200ms ease;
+        transition: background-color 200ms ease;
+        font-family: Oswald, sans-serif;
+        font-size: 12.5px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: white;
+        padding: 21px 30px 20px 30px;
+    }
+
+        .NomeUser:hover {
+            color: white;
+        }
+
+    .tt:hover {
+        color: white;
+    }
+</style>
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700%7CRoboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic%7CLora:regular,italic,700,700italic%7CNoto+Serif:regular,italic">
+
+<div class="esconder">
+    <header class="header-desktop jj" style="background-color:black; height: 60px">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="header-wrap">
+                    <form class="form-header"></form>
+                    <div class="header-button">
+                        <div class="account-wrap">
+                            <div class="content">
+
+                                @*<a href="#" class="tt" style="color:white">Sair</a>*@
+
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <a href="/" class="tt Fonte">Início</a>
+                                        <a href="/Dashboard/Index" class="tt Fonte" style="color:white;">Dashboard</a>
+                                        <a href="/Conhecimento/Index" class="tt Fonte">Conhecimento</a>
+                                        if (FiveGold.Models.Mapeamento.Usuario.Get.Nome == "FiveGold-ADM")
+                                        {
+                                            <a href="/Dashboard/PainelADM" class="NomeUser">BEM VINDO @FiveGold.Models.Mapeamento.Usuario.Get.Nome!</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="NomeUser">BEM VINDO @FiveGold.Models.Mapeamento.Usuario.Get.Nome!</a>
+                                        }
+
+                                        <a href="javascript:document.getElementById('logoutForm').submit()" class="tt Fonte">Sair</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

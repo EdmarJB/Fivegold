@@ -1,0 +1,146 @@
+﻿@model FiveGold.Models.Mapeamento.PagarFatura
+
+<style>
+    .botao {
+        /*font-weight: bold;*/
+        padding: 10px;
+        float: left;
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+        border-bottom-style: solid;
+        border-top-color: darkorange;
+        border-right-color: darkorange;
+        border-bottom-color: darkorange;
+        border-left-color: darkorange;
+        color: white;
+        background-color: darkorange;
+        /*margin-left: 20px;*/
+    }
+
+        .botao:hover {
+            background-color: rgb(238,118,0);
+            /*CSS 3*/
+            /*border-radius: 10px 0px 10px 0px;*/
+            color: white;
+        }
+</style>
+
+<script src="~/Content/Mascara-de-valores/jquery.mask.js"></script>
+<script>
+    function Pagar() {
+        if ($("#IDConta").val() === "0") {
+            $("#msg-preenche").html('<div class="alert alert-warning" role="alert">Selecione uma conta!</div>');
+        } else {
+            var valor = $('#valor').val().replace(".", "");
+
+            var e = document.getElementById("IDConta");
+            var idConta = e.options[e.selectedIndex].value;
+
+            var idCartao = $('#idCartao').val();
+            var idCatDespesa = $('#idCatDespesa').val();
+            var dataInicial = $('#dataInicio').val();
+
+            $("#msg-preenche").html('');
+            document.getElementById('btn').value = "Aguarde...";
+
+            $.ajax({
+                url: '@Url.Action("Create", "PagarFatura")',
+                type: 'Post',
+                dataType: 'json',
+                data: { Valor: valor, IDConta: idConta, IDCartao: idCartao, IDCatDespesa: idCatDespesa, DataInicial: dataInicial },
+                success: function (resposta) {
+                    if (resposta == 'pagou') {
+
+                        swal("Sucesso!", "Sua fatura foi paga!", "success")
+                            .then((value) => {
+                                if (value == true) {
+                                    var url = '@Url.Action("DespCartao","Dashboard", new { id = "cartao", DataInicio = "dataIn"})';
+                                    url = url.replace("cartao", idCartao);
+                                    url = url.replace("dataIn", dataInicial);
+                                    window.location.href = url;
+                                }
+                            });
+
+                    }
+                     else if (resposta == "naoPagou") {
+
+                        alert("Esta fatura nao pôde ser paga!");
+                    }
+                    else if (resposta == "problema") {
+
+                    alert("Problema!");
+                }
+                }, error: function (resposta) {
+
+                    alert("Tivemos um problema ao pagar a fatura!");
+                }
+            });
+        }
+    }
+
+    function loadPageWithId(idValue) {
+  var link = '@Url.Action("Action", "Controller", new { id = "replace" })';
+  link = link.replace("replace", idValue);
+  $('#myDiv').load(link);
+}
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <div class="modal-header" style="background-color:darkorange">
+        <h3 class="modal-title" style="color:white;">Pagar Fatura &nbsp;<i class="fas fa-hand-holding-usd"></i></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <span id="msg-preenche"></span>
+    <div class="row col-sm-12" style="background-color:rgba(255,220,50,0.1); margin-left:0px; padding-top:10px">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10" style="font-weight:700; font-size:20px">
+                    R$ @Model.Valor.ToString("###,###,##0.00")
+                    @*@Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                    @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDConta, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IDConta", null, htmlAttributes: new { @class = "form-control col-md-12" })
+                    @Html.ValidationMessageFor(model => model.IDConta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <input type="text" id="valor" name="valor" value="@Model.Valor.ToString("###,###,##0.00")" />
+            <br />
+            <input type="text" id="idConta" name="idConta" value="@Model.IDConta" />
+            <br />
+            <input type="text" id="idCartao" name="idCartao" value="@Model.IDCartao" />
+            <br />
+            <input type="text" id="idCatDespesa" name="idCatDespesa" value="@Model.IDCatDespesa" />
+            <br />
+            <input type="date" id="dataInicio" name="dataInicio" value="@Model.DataInicial.ToString("yyyy-MM-dd")">
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <input type="button" onclick="Pagar()" id="btn" value="Pagar" class="btn botao col-md-12" />
+            </div>
+        </div>
+    </div>
+</div>
+}

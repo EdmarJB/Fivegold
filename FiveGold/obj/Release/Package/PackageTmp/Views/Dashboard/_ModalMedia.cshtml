@@ -1,0 +1,50 @@
+﻿<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="conteudoModal"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    //Create
+    function NovoCartaoCredito() {
+        $("#preloader").show();
+        $("#conteudoModal").load("/CartaoCredito/Create", function () {
+            $('#myModal').modal("show");
+        });
+    }
+
+    //Editar
+
+    function ReceitaEditar(ReceitaEditar) {
+        $("#preloader").show();
+        $("#conteudoModal").load("/Receita/Edit/" + ReceitaEditar, function () {
+            $('#myModal').modal("show");
+        });
+    }
+
+    function DespesaEditar(DespesaEditar) {
+        $("#preloader").show();
+        $("#conteudoModal").load("/Despesa/Edit/" + DespesaEditar, function () {
+            $('#myModal').modal("show");
+        });
+    }
+
+    function CartaoEditar(CartaoEditar) {
+        $("#preloader").show();
+        $("#conteudoModal").load("/CartaoCredito/Edit/" + CartaoEditar, function () {
+            $('#myModal').modal("show");
+        });
+    }
+        
+    function DespCartaoEditar(DespCartaoEditar) {
+        $("#preloader").show();
+        $("#conteudoModal").load("/DespesaCartao/Edit/" + DespCartaoEditar, function () {
+            $('#myModal').modal("show");
+        });
+    }
+</script>

@@ -1,0 +1,27 @@
+﻿
+    @Html.Partial("_HeadDashboard")
+    <div class="page-wrapper">
+        @Html.Partial("_MenuLateral")
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            @Html.Partial("_MenuSuperior")
+            <!--INICIO DA DASHBOARD-->
+            <!-- HEADER DESKTOP-->
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        @Html.Partial("_4Botoes")
+                        @Html.Partial("_LinhaGarficos")
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <!-- Scripts Dashboard-->
+    @Html.Partial("_ScriptsDashboard")
+
+    <!--FLOATING ACTION BUTTON E MODAL-->
+    @Html.Partial("_Modal")

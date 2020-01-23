@@ -1,0 +1,30 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.Conta>
+
+@Html.Partial("_HeadDashboard")
+<p class="TituloMobile" style="font-size:30px; font-weight:800; color:rgb(48,80,200);">CONTAS</p>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4" style="margin-bottom:30px" data-toggle="tooltip" data-placement="top" title="@item.Nome">
+            <div class="au-card" style="box-shadow: 3px 3px 5px rgba(48,80,200,0.7);">
+                <div style="float:right">
+                    <button onclick="SaldoEditar(@item.IDConta)"><i class="fas fa-edit" style="color:rgb(48,80,200)"></i></button>&ensp;
+                    @*<button onclick="SaldoApagar(@item.IDConta)"><i class="fas fa-trash" style="color:rgb(48,80,200)"></i></button>*@
+                </div>
+                <br />
+                <div class="card-body" style="color:rgb(48,80,200); font-weight:500;">
+                    <p>Conta:&ensp; @item.Nome</p>
+                    <p>Saldo:&ensp; R$ @item.Saldo.ToString("#,###,##0.00")</p>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="col-lg-4">
+        <div class="au-card" data-toggle="tooltip" data-placement="top" title="Nova Conta" onclick="NovaConta()" style="height: 200px; text-align:center; cursor:pointer; box-shadow: rgba(48,80,200,0.7) 3px 3px 5px;">
+            <div class="card-body">
+                <button><i class="fas fa-plus" style="font-size:5rem; color:rgb(48,80,200)"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.Transferencia>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IDOrigem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IDDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataTransferencia)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+
+                @foreach (var conta in ViewBag.ListaNomeContas)
+                {
+                    if (item.IDOrigem == conta.IDConta)
+                    {
+                        <td>@conta.Nome</td>
+                    }
+
+                }
+
+                @foreach (var conta in ViewBag.ListaNomeContas)
+                {
+                    if (item.IDDestino == conta.IDConta)
+                    {
+                        <td>@conta.Nome</td>
+                    }
+
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataTransferencia)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdTransferencia }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.IdTransferencia }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdTransferencia })
+                </td>
+            </tr>
+        }
+
+    </table>

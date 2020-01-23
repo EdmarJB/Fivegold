@@ -1,0 +1,105 @@
+﻿
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.ui.datepicker-pt-BR.js"></script>
+    <script type="text/javascript" src="/js/jquery.maskedinput-1.3.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.validate-1.10.min.js"></script>
+    <script type="text/javascript" src="/js/additional-methods.min.js"></script>
+    <script type="text/javascript">
+			$(function() {
+				$.datepicker.setDefaults($.datepicker.regional["pt-BR"]);
+				$('#dataCalc').datepicker({
+					showOn: "button",
+					buttonImage: "/img/calendar.gif",
+					buttonImageOnly: true,
+					changeMonth: true,
+					changeYear: true,
+					showButtonPanel: true
+				});
+			});
+
+			$(".alert").alert();
+
+			$('#anos,#meses,#dias').each(function(){
+				$(this).blur(function(){
+					$(this).val($(this).val().replace(/[^0-9]/g, ''));
+				});
+			});
+
+			$("#dataCalc").mask("99/99/9999",{placeholder:" "});
+
+			$('.alert .close').live("click", function(e) {
+			    $(this).parent().hide();
+			});
+
+			$('#hoje').click(function(){
+				$( '#dataCalc' ).val($.datepicker.formatDate("dd/mm/yy", new Date(parseInt($('#ctime').val())) ) );
+				return false;
+			});
+
+			jQuery.validator.addMethod("valida", function(value, element) {
+				if ($('#anos').val().length > 0 || $('#meses').val().length > 0 || $('#dias').val().length > 0 ) {
+					return true;
+				}
+				return false;
+			}, "Informe um ano, m&ecirc;s ou dia para a opera&ccedil;&atilde;o.");
+
+			function calcular() {
+				$("#result").hide();
+				$("#vld1").hide();
+				$("#calculo").validate({
+					errorLabelContainer: "#vld2",
+					onkeyup: false,
+					rules: {
+						dataCalc: {required: true, dateITA: true},
+						anos: {valida: true}
+				  	},
+					messages: {
+						dataCalc: {required: "Informe a data para c&aacute;lculo.", dateITA: "Data para c&aacute;lculo inv&aacute;lida."}
+					}
+				});
+				if ($("#calculo").valid()) {
+					$('.btn').button('loading');
+					$.post('/period',
+						{'dataCalc':$('input#dataCalc').val(), 'anos':$('input#anos').val() , 'meses':$('input#meses').val(), 'dias':$('input#dias').val(), 'oper':$('select#oper').val(),'op':1},
+						function(data) {
+							$('div#result').html('A data resultante &eacute; ' +data);
+							$("#result").show();
+							$('.btn').button('reset');
+					});
+				}
+			}
+			$(function() {
+				$.datepicker.setDefaults($.datepicker.regional["pt-BR"]);
+				$('#data').datepicker({
+					showOn: "button",
+					buttonImage: "/img/calendar.gif",
+					buttonImageOnly: true,
+					changeMonth: true,
+					changeYear: true,
+					showButtonPanel: true
+				});
+			});
+
+			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+			window.___gcfg = {lang: 'pt-BR'};
+			(function() {
+				var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+				po.src = 'https://apis.google.com/js/plusone.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+			})();
+
+			var _gaq = _gaq || [];
+			_gaq.push([ '_setAccount', 'UA-37611686-1' ]);
+			_gaq.push([ '_trackPageview' ]);
+			(function() {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
+    </script>

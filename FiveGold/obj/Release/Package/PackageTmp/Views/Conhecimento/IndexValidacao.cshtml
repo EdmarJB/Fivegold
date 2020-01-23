@@ -1,0 +1,102 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.Conhecimento>
+
+@{
+    ViewBag.Title = "IndexValidacao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function Validar() {
+        swal({
+            title: "Validar Post?",
+            text: "Ele ira aparecer na pagina de conhecimento.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                            url: '@Url.Action("ValidarPost", "Conhecimento")',
+                            type: 'Post',
+                        dataType: 'json',
+                        data: { IDPost : $("#idpost").val() },
+                            success: function (resposta) {
+                                if (resposta == 'validou') {
+                                    swal({
+                                        text: "Post validado com sucesso!",
+                                        icon: "success",
+                                    })
+                                        .then((value) => {
+                                            window.location.href = "/Conhecimento/IndexValidacao";
+                                        });
+                                } else if (resposta == 'naoValidou') {
+                                    swal("Tivemos um problema ao validar este Post.", {
+                                        icon: "warning",
+                                    });
+                                }
+                            }, error: function (resposta) {
+                                swal("Erro ao realizar este processo!", {
+                                    icon: "warning",
+                                });
+                            }
+                        });
+
+                } else {
+                    swal({
+                        icon: "warning",
+                        text: "Cancelado com sucesso!",
+                    });
+                }
+            });
+    }
+</script>
+
+<h2>Validação de Posts</h2>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TemaConhecimento.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.validacao)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <input style="display:none" type="text" id="idpost" name="idpost" value="@item.IDConhecimento" />
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @item.DataPost.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TemaConhecimento.Nome)
+            </td>
+            <td>
+                <input onclick="Validar()" type="button" name="botao" value="Validar" class="btn btn-warning" />
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.IDConhecimento }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Ler", "Details", new { id = item.IDConhecimento }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.IDConhecimento }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Voltar", "../Dashboard/PainelADM", new { }, new { @class = "btn btn-primary" })

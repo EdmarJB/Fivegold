@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.Receita>
+
+<h2>Receitas</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CatReceita.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Conta.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Pago)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CatReceita.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Conta.Nome)
+        </td>
+        <td>
+            R$ @item.Valor.ToString("#,##0.00")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Pago)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IDReceita }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IDReceita }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IDReceita })
+        </td>
+    </tr>
+}
+
+</table>

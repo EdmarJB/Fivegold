@@ -1,0 +1,61 @@
+﻿@model FiveGold.Models.Mapeamento.Conhecimento
+
+<div>
+    <h4>Excluir Conhecimento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataPost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataPost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Texto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Texto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TemaConhecimento.Nome)
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.TemaConhecimento.Logo))
+            {
+                <img src="@Url.Content(Model.TemaConhecimento.Logo)" alt="Image" style="width:200px;height:150px;max-width: 100%; height: auto;" />
+            }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-danger" /> |
+            @Html.ActionLink("Voltar", "../Conhecimento/IndexValidacao", new { }, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

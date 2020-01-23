@@ -1,0 +1,234 @@
+﻿@*<script>
+        $(window).on('load', function () {
+            $('#preloader .inner').fadeOut();
+            $('#preloader').delay(350).fadeOut('slow');
+            $('body').delay(350).css({ 'overflow': 'visible' });
+        });
+    </script>*@
+
+
+<script>
+    function Loader() {
+        $("#preloader").show();
+    }
+</script>
+
+<!-- início do preloader -->
+<div id="preloader">
+    <div class="inner">
+        <!-- HTML DA ANIMAÇÃO MUITO LOUCA DO SEU PRELOADER! -->
+        <div class="bolas">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+<!-- fim do preloader -->
+
+<style>
+        /*body {
+      overflow: hidden;
+    }*/
+
+        /* ini: Preloader */
+
+        #preloader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(128, 128, 128, 0.5); /* cor do background que vai ocupar o body */
+            z-index: 999; /* z-index para jogar para frente e sobrepor tudo */
+        }
+
+            #preloader .inner {
+                position: absolute;
+                top: 50%; /* centralizar a parte interna do preload (onde fica a animação)*/
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+        .bolas > div {
+            display: inline-block;
+            background-color: #fff;
+            width: 25px;
+            height: 25px;
+            border-radius: 100%;
+            margin: 3px;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            animation-name: animarBola;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+            .bolas > div:nth-child(1) {
+                animation-duration: 0.75s;
+                animation-delay: 0;
+            }
+
+            .bolas > div:nth-child(2) {
+                animation-duration: 0.75s;
+                animation-delay: 0.12s;
+            }
+
+            .bolas > div:nth-child(3) {
+                animation-duration: 0.75s;
+                animation-delay: 0.24s;
+            }
+
+        @@keyframes animarBola {
+            0% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            16% {
+                -webkit-transform: scale(0.1);
+                transform: scale(0.1);
+                opacity: 0.7;
+            }
+
+            33% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        /* end: Preloader */
+</style>
+
+
+
+
+
+
+
+
+<style>
+    @@keyframes bounce {
+        0%, 20%, 60%, 100% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+
+        40% {
+            -webkit-transform: translateY(-20px);
+            transform: translateY(-20px);
+        }
+
+        80% {
+            -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+        }
+    }
+
+    .efeito-4:hover {
+        animation: bounce 1s;
+    }
+</style>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+
+<!-- FLOATING ACTION BUTTON-->
+<div class="fixed-action-btn">
+    <button class="btn-floating btn-large btn-primary">
+        <i class="fas fa-plus"></i>
+    </button>
+    <ul>
+        <li><button onclick="Loader()" class="btn-floating btn-success btnReceita" data-toggle="tooltip" data-placement="left" title="Nova Receita"><i class="fas fa-sort-amount-up"></i></button></li>
+        <li><button onclick="Loader()" class="btn-floating btn-danger btnDespesa" data-toggle="tooltip" data-placement="left" title="Nova Despesa"><i class="fas fa-sort-amount-down"></i></button></li>
+        <li><button onclick="Loader()" class="btn-floating btn-warning btnCartaoCredito" data-toggle="tooltip" data-placement="left" title="Nova Despesa Cartão"><i class="fas fa-credit-card"></i></button></li>
+        <li><button onclick="Loader()" class="btn-floating btn-info btnTransferencia" data-toggle="tooltip" data-placement="left" title="Nova Transferência"><i class="fas fa-exchange-alt"></i></button></li>
+    </ul>
+</div>
+<!--FIM -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="conteudoModal"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script type="text/javascript">
+        $(document).ready(function () {
+            $("#menu a").click(function(e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $("#conteudoAtualiza").load(href);
+        });
+    });
+    </script>*@
+
+<script type="text/javascript">
+
+    //function ListarReceita() {
+    //    alert("hhhh")
+    //    e.preventDefault();
+    //    var href = $(this).attr('href');
+    //    $("#conteudoAtualiza").load(href + " #jjj");
+    //}
+
+    //$("").click(function (e) {
+    //    e.preventDefault();
+    //    var href = $(this).attr('href');
+    //    $("#conteudoAtualiza").load(href);
+
+    //    $("#ttt").html(headline);
+    //    $.ajax({
+    //        type: 'POST',
+    //        data: '',
+    //        url: href,
+    //        success: function (data) {
+    //            $("#ttt").load(href + "#ttt");
+    //        }
+    //    });
+    //    $("#ttt").html(href + "#ttt");
+    //});
+
+    $(document).ready(function () {
+        $.ajaxSetup({ cache: false });
+
+        $(".btnReceita").click(function () {
+            $("#conteudoModal").load("/Receita/Create/", function () {
+                $('#myModal').modal("show");
+            });
+        });
+
+        $(".btnDespesa").click(function () {
+            $("#conteudoModal").load("/Despesa/Create/", function () {
+                $('#myModal').modal("show");
+            });
+        });
+
+        $(".btnCartaoCredito").click(function () {
+            $("#conteudoModal").load("/DespesaCartao/Create/", function () {
+                $('#myModal').modal("show");
+            });
+        });
+
+        $(".btnSaldoAtual").click(function () {
+            $("#conteudoModal").load("/Saldo/Saldo/", function () {
+                $('#myModal').modal("show");
+            });
+        });
+
+        $(".btnTransferencia").click(function () {
+            $("#conteudoModal").load("/Transferencia/Create/", function () {
+                $('#myModal').modal("show");
+            });
+        });
+    });
+</script>

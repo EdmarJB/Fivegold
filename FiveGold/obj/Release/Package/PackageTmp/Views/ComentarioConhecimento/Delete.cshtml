@@ -1,0 +1,46 @@
+﻿@model FiveGold.Models.Mapeamento.ComentarioConhecimento
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Excluir Comentário</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataComentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataComentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TextoComentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TextoComentario)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

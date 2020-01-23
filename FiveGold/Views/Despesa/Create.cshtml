@@ -1,0 +1,104 @@
+﻿@model FiveGold.Models.Mapeamento.Despesa
+
+<script src="~/Content/Mascara-de-valores/jquery.mask.js"></script>
+<script type="text/javascript">
+
+    $("form").on("submit", function (e) {
+        $('#Valor').val(String($("#Valor").val()).replace(".", ""));
+
+        if ($("#Valor").val() === "" || $("#DataVencimento").val() === "" || $("#IDCatDespesa").val() === "0" || $("#IDConta").val() === "0") {
+            e.preventDefault();
+            //alert(tt);
+            $("#msg-preenche").html('<div class="alert alert-warning" role="alert">Preencha todos os campos!</div>');
+        } else
+        document.getElementById('btn').value = "Aguarde...";
+    });
+
+    $(document).ready(function () {
+        $('#Valor').mask('###.##0,00', { reverse: true });
+        $("#preloader").hide();
+    })
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="modal-header" style="background-color:red">
+            <h3 class="modal-title" style="color:white;">Nova Despesa &nbsp;<i class="fas fa-sort-amount-down"></i></h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <span id="msg-preenche"></span>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row col-sm-12" style="background-color:rgba(255,0,0,0.1); margin-left:0px; padding-top:10px">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @*@Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control col-md-12" } })*@
+                        <input type="text" id="Valor" name="Valor" placeholder="0,00" data-mask="#.###.##0,00" class="form-control col-md-12" />
+                        @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                        @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control col-md-12", placeholder = "Qual foi sua despesa?" } })
+                        @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.Pago, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Pago)
+                                @Html.ValidationMessageFor(model => model.Pago, "", new { @class = "text-danger col-md-12" })
+                            </div>
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IDCatDespesa, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IDCatDespesa", null, htmlAttributes: new { @class = "form-control col-md-12" })
+                        @Html.ValidationMessageFor(model => model.IDCatDespesa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IDConta, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IDConta", null, htmlAttributes: new { @class = "form-control col-md-12" })
+                        @Html.ValidationMessageFor(model => model.IDConta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" id="btn" value="Salvar" class="btn btn-danger col-md-12" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

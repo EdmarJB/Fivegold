@@ -1,0 +1,46 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.Conta>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CatConta.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Saldo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CatConta.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Saldo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IDConta }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IDConta }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IDConta })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,37 @@
+﻿@model FiveGold.Models.Mapeamento.Bandeira
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalhes</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Logo)
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.Logo))
+            {
+                <img src="@Url.Content(Model.Logo)" alt="Image" style="width:100px;max-width: 100%; height: auto;" />
+            }
+        </dd>
+
+    </dl>
+</div>
+<br />
+<br />
+<p>
+    <input type="button" value="Voltar" class="btn btn-primary" onClick="history.go(-1)">
+</p>

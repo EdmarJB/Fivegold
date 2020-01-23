@@ -1,0 +1,58 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.CartaoCredito>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Novo Cartão", "../CartaoCredito/Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bandeira.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Limite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiaFechamento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiaPagamento)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bandeira.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Limite)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiaFechamento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiaPagamento)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IDCartao }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IDCartao }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IDCartao })
+        </td>
+    </tr>
+}
+
+</table>

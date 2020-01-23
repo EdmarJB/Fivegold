@@ -1,0 +1,122 @@
+﻿@model IEnumerable<FiveGold.Models.Mapeamento.DespesaCartao>
+
+<div id="ListarDespCartao">
+    @using (Ajax.BeginForm("DespCartao", "Dashboard", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ListarDespCartao" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-12">
+                <p type="text" id="id" name="id" />
+                Data Inicial: <input type="date" id="DataInicio" name="DataInicio" value="@ViewBag.DataInicial" class="col-lg-3" style="color:gray; padding:10px; border-radius:8px; margin-bottom:10px">&ensp;&ensp;
+                Data Final: <input type="date" id="DataFim" name="DataFim" value="@ViewBag.DataFinal" class="col-lg-3" style="color:gray; padding:10px; border-radius:8px; margin-bottom:10px" />&ensp;&ensp;
+                <input type="submit" value="Consultar" class="btn btn-primary col-lg-3" style="padding:10px; border-radius:8px" />
+            </div>
+        </div>
+    }
+
+    @using (Ajax.BeginForm("DespCartao", "Dashboard", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ListarDespCartao" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row" style="margin-bottom:5px">
+            <div class="col-md-12">
+                <div style="display:none">
+                    <input type="text" name="ValorFatura" id="ValorFatura" value="@ViewBag.fatura" />
+                    <p type="text" id="id" name="id" />
+                    <input type="text" id="direcao" name="direcao" />
+                    <input type="date" id="DataInicio" name="DataInicio" value="@ViewBag.DataInicial">
+                </div>
+                <div style="background-color:rgb(51,51,51); color:white; width:100%; border-radius:10px; padding:5px 40px">
+                    <div class="overview-wrap">
+                        <button type="submit" onclick="carregar(1)" style="color:white"><i class="fas fa-chevron-left" style="font-size:2rem"></i></button>
+                        <div>@ViewBag.mes</div>
+                        <button type="submit" onclick="carregar(2)" style="color:white"><i class="fas fa-chevron-right" style="font-size:2rem"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="table-responsive table--no-card m-b-40" style="background-color:white">
+        <table class="table table-borderless table-striped table-earning">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descricao)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DataCompra)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Parcela)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ValorParcela)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Valor)*@
+                            @item.Descricao
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.DataCompra)*@
+                            @item.DataCompra.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @((item.QtdParcela - item.Parcela)+1) / @item.QtdParcela
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.ValorParcela)*@
+                            R$ @item.ValorParcela.ToString("#,###,##0.00")
+                        </td>
+                        <td>
+                            <button onclick="DespCartaoEditar(@item.IDDespCartao)"><i class="fas fa-edit" style="color:gray"></i></button>
+                            &ensp;&ensp;
+                            <button onclick="DespCartaoDetalhes(@item.IDDespCartao)"><i class="fas fa-info-circle" style="color:gray"></i></button>
+                            &ensp;&ensp;
+                            <button onclick="DespCartaoApagar(@item.IDDespCartao)"><i class="fas fa-trash" style="color:gray"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+    <div class="pull-right">
+        <div style="color:black">Fatura R$ @ViewBag.fatura.ToString("#,###,##0.00")</div>
+        <div style="clear:both">
+            @if ((DateTime.Now < Convert.ToDateTime(ViewBag.DataFinal)) && ViewBag.FaturaPaga == null && ViewBag.fatura != 0)
+            {
+                <button disabled="disabled" id="Pagar" type="submit" class="btn btn-primary pull-right">Pagar Fatura</button>
+            }
+            else if ((DateTime.Now > Convert.ToDateTime(ViewBag.DataFinal)) && ViewBag.fatura != 0 && ViewBag.FaturaPaga == null)
+            {
+                <button onclick="PagarFatura(@ViewBag.IDCartao, $('#ValorFatura').val(), $('#DataInicio').val())" id="Pagar" type="submit" class="btn btn-warning pull-right">Pagar Fatura</button>
+            }
+            else if (ViewBag.FaturaPaga == 1 && ViewBag.fatura != 0)
+            {
+                <button id="Pagar" type="button" disabled="disabled" class="btn btn-success pull-right">Fatura Paga</button>
+            }
+            else if ((DateTime.Now > Convert.ToDateTime(ViewBag.DataFinal)) && ViewBag.FaturaPaga == null && ViewBag.fatura == 0)
+            {
+                <button disabled="disabled" id="Pagar" type="submit" class="btn btn-primary pull-right">Sem Fatura</button>
+            }
+            else if ((DateTime.Now < Convert.ToDateTime(ViewBag.DataFinal)) && ViewBag.fatura == 0)
+            {
+            <button disabled="disabled" id="Pagar" type="submit" class="btn btn-primary pull-right">Sem Fatura</button>
+            }
+        </div>
+
+    </div>
+</div>
+
+@*<script>
+        document.getElementById('Pagar').disabled = false;
+    </script>*@
+
+@*//if (document.getElementById('avancar').disabled == false) { document.getElementById('avancar').disabled = true }*@

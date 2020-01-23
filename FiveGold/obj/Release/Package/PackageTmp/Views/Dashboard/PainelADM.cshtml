@@ -1,0 +1,201 @@
+﻿<style>
+    .BckgVerde {
+        background-color: green
+    }
+
+    .BckgVermelho {
+        background-color: rgb(205,51,51)
+    }
+
+    .BckgAzul {
+        background-color: rgb(48,60,200)
+    }
+
+    .BckgAmarelo {
+        background-color: darkorange
+    }
+
+    .BckgRoxo {
+        background-color: purple
+    }
+
+    .BckgMarron {
+        background-color: saddlebrown
+    }
+
+    .BkgLaranja{
+        background-color: darkorange
+    }
+
+    .TxtBranco {
+        color: white
+    }
+
+    .Maozinha {
+        cursor: pointer
+    }
+
+    h3 {
+        color: white
+    }
+</style>
+
+@Html.Partial("_HeadDashboard")
+
+<div class="page-wrapper">
+
+    @Html.Partial("_MenuLateralPainelADM")
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+
+        @Html.Partial("MenuSuperiorPainelADM")
+
+        <!--INICIO DA DASHBOARD-->
+        <!-- HEADER DESKTOP-->
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="overview-wrap">
+                                            <span></span>
+                                            <div>
+                                                <img src="~/Content/Imagens/Icones/PainelControle.png" width="150px" />
+                                                <div style="clear:both">
+                                                    PAINEL DE CONTROLE
+                                                </div>
+                                            </div>
+                                            <span></span>
+                                            @*<button onclick="location.href='@Url.Action("Index","Home")'; return false" class="au-btn au-btn-icon au-btn--blue">
+                                                <i class="fas fa-home"></i> início
+                                            </button>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <div class="overview-wrap">
+                                    <span></span>
+                                    <span style="color:black; font-size:20px;">CADASTRO DE CATEGORIAS</span>
+                                    <span></span>
+                                </div>
+
+                                <div class="row m-t-25">
+
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="overview-item BckgRoxo Maozinha" onclick="location.href = '../TemaConhecimento/Index'">
+                                            <div class="overview__inner">
+                                                <div class="overview-box clearfix">
+                                                    <div class="icon">
+                                                        <i class="fas fa-brain" style="font-size:2rem"></i>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h3 class="TxtBranco">Temas de Conhecimento</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="overview-item BkgLaranja Maozinha" onclick="location.href = '../Conhecimento/IndexValidacao'">
+                                            <div class="overview__inner">
+                                                <div class="overview-box clearfix">
+                                                    <div class="icon">
+                                                        <i class="fas fa-brain" style="font-size:2rem"></i> <i class="fas fa-check" style="font-size:1.5rem"></i>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h3 class="TxtBranco">Validação de Conhecimento</h3>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="overview-item BckgVerde Maozinha" onclick="location.href = '../CatReceita/Index'">
+                                            <div class="overview__inner">
+                                                <div class="overview-box clearfix">
+                                                    <div class="icon">
+                                                        <i class="fas fa-sort-amount-up" style="font-size:2rem"></i>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h3 class="TxtBranco">Categorias de Receita</h3>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="overview-item BckgVermelho Maozinha" onclick="location.href = '../CatDespesa/Index'">
+                                            <div class="overview__inner">
+                                                <div class="overview-box clearfix">
+                                                    <div class="icon">
+                                                        <i class="fas fa-sort-amount-down" style="font-size:2rem"></i>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h3 class="TxtBranco">Categorias de Despesa</h3>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="overview-item BckgAzul Maozinha" onclick="location.href = '../CatConta/Index'">
+                                            <div class="overview__inner">
+                                                <div class="overview-box clearfix">
+                                                    <div class="icon">
+                                                        <i class="fas fa-credit-card" style="font-size:2rem"></i>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h3 class="TxtBranco">Categorias de Conta</h3>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="overview-item BckgMarron Maozinha" onclick="location.href = '../Bandeira/Index'">
+                                            <div class="overview__inner">
+                                                <div class="overview-box clearfix">
+                                                    <div class="icon">
+                                                        <i class="fas fa-flag" style="font-size:2rem"></i>
+                                                    </div>
+                                                    <br />
+                                                    <div class="text">
+                                                        <h3 class="TxtBranco">Bandeiras</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br /><br /><br />
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT-->
+        <!-- END PAGE CONTAINER-->
+    </div>
+</div>
+<!-- Scripts Dashboard-->
+@Html.Partial("_ScriptsDashboard")
+
+@Html.Partial("_Modal")
+@Html.Partial("_ModalMedia")
+@Html.Partial("_ModalPequena")

@@ -1,0 +1,81 @@
+﻿@using FiveGold.Models.Mapeamento
+@model FiveGold.Models.Mapeamento.LoginViewModel
+@{
+    /**/
+
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <title>Login - Five Gold</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body cz-shortcut-listen="true">
+    <div class="w-nav-overlay" data-wf-ignore=""></div>
+    <div id="Hero">
+        <div class="flex" style="height:800px">
+            <div class="_37-column">
+                <div class="offset-box">
+                    <div class="title-white">5 GOLD</div>
+                    <h1 class="hero-heading">SUA VIDA FINANCEIRA CONTROLADA DE FORMA SIMPLES!</h1>
+                    <div class="borders medium">
+                        <div class="white-line"></div>
+                    </div>
+                    <div>
+                        <p class="subtitle-white">Planejamento financeiro, vamos juntos!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="_65-column">
+                <div class="_5-form" style="margin-top:90px">
+                    <div class="form-title">
+                        <div class="regular-title medium">Login</div>
+                    </div>
+                    <div class="free-class-form w-form">
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <div style="color:white">
+                                @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="bg-white">
+                                <div class="input-spacing">
+                                    <div class="form-tag">.</div>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "_2-text-field nome w-input", placeholder = "E-Mail" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="input-spacing">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "_2-text-field password w-input", placeholder = "Senha" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="bottom-border checkbox">
+                                </div>
+                            </div>
+                            <input type="submit" value="Entrar" id="btn" onclick="Aguarde()" class="_4-submit-button w-button">
+                        }
+                        <div class="error-message w-form-fail">
+                            <div>Oops! Algum erro no formulário</div>
+                        </div>
+                    </div>
+
+                    @*@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function Aguarde() {
+            document.getElementById('btn').value = "Aguarde...";
+        }
+    </script>
+</body>
+</html>

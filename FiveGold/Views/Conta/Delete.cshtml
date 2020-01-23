@@ -1,0 +1,83 @@
+﻿@model FiveGold.Models.Mapeamento.Conta
+<script>
+    $(document).ready(function () {
+        $("#preloader").hide();
+    })
+</script>
+<style>
+    .botaoAzul {
+        /*font-weight: bold;*/
+        padding: 10px;
+        float: left;
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+        border-bottom-style: solid;
+        border-top-color: rgb(48,60,200);
+        border-right-color: rgb(48,60,200);
+        border-bottom-color: rgb(48,60,200);
+        border-left-color: rgb(48,60,200);
+        color: white;
+        background-color: rgb(48,60,200);
+        /*margin-left: 20px;*/
+    }
+
+        .botaoAzul:hover {
+            background-color: rgb(48,60,255);
+            /*CSS 3*/
+            /*border-radius: 10px 0px 10px 0px;*/
+            color: white;
+        }
+</style>
+
+<div class="modal-header" style="background-color:rgb(48,60,200)">
+    <h3 class="modal-title" style="color:white;">Excluir Conta &nbsp;<i class="zmdi zmdi-money" style="font-size:2rem"></i></h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div style="background-color:rgba(0,0,255,0.1); margin-left:0px; padding-top:10px">
+
+    <dl class="dl-horizontal" style="padding-left:20px">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Saldo)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Saldo)*@
+            R$ @Model.Saldo.ToString("#,##0.00")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CatConta.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatConta.Nome)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group" style="margin-top:10px">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="Excluir" class="btn botaoAzul col-md-12" style="margin-top:5px" />
+            </div>
+        </div>
+
+        <br /><br />
+    }
+
+</div>

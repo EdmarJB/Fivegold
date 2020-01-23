@@ -1,0 +1,42 @@
+﻿@model FiveGold.Models.Mapeamento.ComentarioConhecimento
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ComentarioBlog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataComentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataComentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TextoComentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TextoComentario)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDComentario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

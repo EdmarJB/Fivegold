@@ -1,0 +1,65 @@
+﻿@model FiveGold.Models.Mapeamento.CartaoCredito
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#preloader").hide();
+    })
+</script>
+
+<h2>Details</h2>
+
+<div>
+    <h4>CartaoCredito</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Bandeira.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bandeira.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Limite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Limite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiaFechamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiaFechamento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiaPagamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiaPagamento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDCartao }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

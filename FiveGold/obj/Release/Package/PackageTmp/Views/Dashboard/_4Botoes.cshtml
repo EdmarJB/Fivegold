@@ -1,0 +1,101 @@
+﻿<style>
+    .BckgVerde {
+        background-color: green
+    }
+
+    .BckgVermelho {
+        background-color: rgb(205,51,51)
+    }
+
+    .BckgAzul {
+        background-color:rgb(48,60,200)
+    }
+
+    .BckgAmarelo {
+        background-color: darkorange
+    }
+
+    .TxtBranco{
+        color:white
+    }
+
+    .Maozinha {
+        cursor: pointer
+    }
+</style>
+
+<div class="row m-t-25">
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item BckgAzul Maozinha" onclick="location.href = '../Dashboard/Contas'">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="zmdi zmdi-money" style="font-size:2.5rem"></i>
+                    </div>
+                    <div class="text">
+                        <h3 class="TxtBranco">Saldo&ensp;&ensp;&ensp;&ensp;&ensp;</h3>
+                        <span>R$ @ViewBag.saldo.ToString("#,##0.00")</span>
+                    </div>
+                </div>
+                @*<div class="overview-chart">
+                        <canvas id="widgetChart1"></canvas>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item BckgVerde Maozinha" onclick="location.href = '../Dashboard/Receitas'">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="fas fa-sort-amount-up" style="font-size:2rem"></i>
+                    </div>
+                    <div class="text">
+                        <h3 class="TxtBranco">Receitas&ensp;</h3>
+                        <span>R$ @ViewBag.receita.ToString("#,##0.00")</span>
+                    </div>
+                </div>
+                @*<div class="overview-chart">
+                        <canvas id="widgetChart2"></canvas>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item BckgVermelho Maozinha" onclick="location.href = '../Dashboard/Despesas'">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="fas fa-sort-amount-down" style="font-size:2rem"></i>
+                    </div>
+                    <div class="text">
+                        <h3 class="TxtBranco">Despesas</h3>
+                        <span>R$ @ViewBag.despesa.ToString("#,##0.00")</span>
+                    </div>
+                </div>
+                @*<div class="overview-chart">
+                        <canvas id="widgetChart3"></canvas>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+            <div class="overview-item BckgAmarelo Maozinha" onclick="location.href = '../Dashboard/Cartao'">
+                <div class="overview__inner">
+                    <div class="overview-box clearfix">
+                        <div class="icon">
+                            <i class="fas fa-credit-card" style="font-size:2rem"></i>
+                        </div>
+                        <div class="text">
+                            <h3 class="TxtBranco">Cartões&ensp;&ensp;</h3>
+                            <span>R$ @ViewBag.despesaCartao.ToString("#,##0.00")</span>
+                        </div>
+                    </div>
+                    @*<div class="overview-chart">
+                        <canvas id="widgetChart4"></canvas>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+</div>
